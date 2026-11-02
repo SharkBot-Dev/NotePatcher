@@ -1,0 +1,24 @@
+.ntt-form-replace {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    margin: 0px;
+    padding: 10px;
+}
+
+.ntt-form-replace button {
+    background-color: rgb(73, 73, 236);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.ntt-form-replace h3 {
+    font-size: large;
+}
+
+.ntt-form-replace textarea {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px;
+    border-color: white;
+    color: white;
+}
