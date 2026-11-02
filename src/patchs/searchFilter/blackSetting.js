@@ -3,10 +3,17 @@ import { setSetting, getSetting } from "./../../lib/settings.js"
 
 export async function openBlackSetting() {
     let noteTitle = "";
+    let noteAuthor = "";
     const blackNoteSetting = await getSetting("search-filter-black-note")
     if (blackNoteSetting) {
         if (JSON.parse(blackNoteSetting)) {
-            noteTitle = JSON.parse(blackNoteSetting).title.join("\n")
+            if (JSON.parse(blackNoteSetting).title) {
+                noteTitle = JSON.parse(blackNoteSetting).title.join("\n")
+            }
+            if (JSON.parse(blackNoteSetting).author) {
+                noteAuthor = JSON.parse(blackNoteSetting).author.join("\n")
+            }
+            
         }
     }
 
@@ -17,6 +24,9 @@ export async function openBlackSetting() {
         <h3>非表示にするノートのタイトル</h3>
         <p>改行で区切れます。</p>
         <textarea id="ntt-black-note-title" rows="5" cols="33">${noteTitle}</textarea><br>
+        <h3>非表示にするノートの作成者名</h3>
+        <p>改行で区切れます。</p>
+        <textarea id="ntt-black-note-author" rows="5" cols="33">${noteAuthor}</textarea><br>
         <button data-ntt-save="true">保存して閉じる</button>
         </div>
     `
@@ -36,8 +46,12 @@ export async function openBlackSetting() {
             const blacknoteValue = document.getElementById("ntt-black-note-title").value;
             const blackNoteSplit = blacknoteValue.split("\n").filter((bnt) => bnt)
 
+            const blacknoteAuthorValue = document.getElementById("ntt-black-note-author").value;
+            const blackNoteAuthorSplit = blacknoteAuthorValue.split("\n").filter((bnt) => bnt)
+
             setSetting({"search-filter-black-note": JSON.stringify({
-                title: blackNoteSplit
+                title: blackNoteSplit,
+                author: blackNoteAuthorSplit
             })})
 
             location.href = "https://note.com/search"

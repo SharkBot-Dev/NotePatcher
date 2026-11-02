@@ -71,9 +71,9 @@ async function filterSearchPage() {
     }
 
     const blackTitles = blackNotesJson?.title ?? [];
-    console.log(blackTitles)
+    const blackAuthors = blackNotesJson?.author ?? [];
 
-    if (!blackTitles.length) return;
+    if (!blackTitles.length && !blackAuthors.length) return;
 
     function filterNotes(root) {
         if (!(root instanceof Element)) return;
@@ -89,22 +89,39 @@ async function filterSearchPage() {
         for (const elem of elements) {
             const title = elem.querySelector(":scope > h3");
 
-            if (!title) continue;
+            if (title) {
+                const text = title.textContent?.trim() ?? "";
 
-            const text = title.textContent?.trim() ?? "";
+                if (!blackTitles.some(
+                    blackTitle => text.includes(blackTitle)
+                )) {
+                    continue;
+                }
 
-            if (!blackTitles.some(
-                blackTitle => text.includes(blackTitle)
-            )) {
-                continue;
-            }
+                const target = elem.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
 
-            const target = elem.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
+                if (target) {
+                    target.remove();
+                }
+            };
 
-            if (target) {
-                console.log(`削除しました: ${text}`)
-                target.remove();
-            }
+            const author = elem.querySelector(".truncate")
+
+            if (author) {
+                const text = author.textContent?.trim() ?? "";
+
+                if (!blackAuthors.some(
+                    blackAuthor => text.includes(blackAuthor)
+                )) {
+                    continue;
+                }
+
+                const target = elem;
+
+                if (target) {
+                    target.remove();
+                }
+            };
         }
     }
 
