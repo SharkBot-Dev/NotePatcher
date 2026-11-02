@@ -23,6 +23,7 @@ module.exports = {
         // { from: 'src/options.html', to: 'options.html' },
         { from: 'src/patch.css', to: 'patch.css' },
         // { from: 'src/ui.css', to: 'ui.css' },
+        { from: 'src/icons', to: 'icons' },
       ],
     }),
   ],
